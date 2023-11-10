@@ -52,6 +52,7 @@ _testmain.go
 
 ## Directory-based project format:
 .idea/
+.env
 
 ## File-based project format:
 *.ipr
