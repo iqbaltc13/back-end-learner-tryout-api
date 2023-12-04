@@ -14,7 +14,7 @@ type User struct {
 	gorm.Model
 	Email    string `gorm:"size:255;not null;unique" json:"email"`
 	Password string `gorm:"size:255;not null;" json:"-"`
-	id       string `gorm:"size:255;not null;" json:"-"`
+	id       string
 	Entries  []Entry
 }
 
