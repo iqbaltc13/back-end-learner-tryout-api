@@ -9,7 +9,7 @@ import (
 type Entry struct {
 	gorm.Model
 	Content string `gorm:"type:text" json:"content"`
-	UserID
+	UserID  string
 }
 
 func (entry *Entry) Save() (*Entry, error) {
