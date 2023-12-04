@@ -18,7 +18,7 @@ var privateKey = []byte(os.Getenv("JWT_PRIVATE_KEY"))
 func GenerateJWT(user models.User) (string, error) {
 	tokenTTL, _ := strconv.Atoi(os.Getenv("TOKEN_TTL"))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":  user.ID,
+		"id":  user.id,
 		"iat": time.Now().Unix(),
 		"eat": time.Now().Add(time.Second * time.Duration(tokenTTL)).Unix(),
 	})
@@ -49,7 +49,7 @@ func CurrentUser(context *gin.Context) (models.User, error) {
 
 	token, _ := getToken(context)
 	claims, _ := token.Claims.(jwt.MapClaims)
-	userId := uint(claims["id"].(float64))
+	userId := claims["id"].(string)
 
 	user, err := models.FindUserById(userId)
 	if err != nil {
