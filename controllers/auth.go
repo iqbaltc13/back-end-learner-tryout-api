@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"back-end-learner-tryout-api/helper"
+	"back-end-learner-tryout-api/model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +18,7 @@ func Register(context *gin.Context) {
 	}
 
 	user := model.User{
-		Username: input.Username,
+		Email:    input.Email,
 		Password: input.Password,
 	}
 
@@ -40,8 +41,8 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	user, err := model.FindUserByUsername(input.Username)
-
+	//user, err := model.FindUserByUsername(input.Username)
+	user, err := model.FindUserByEmail(input.Email)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

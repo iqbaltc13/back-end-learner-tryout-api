@@ -1,7 +1,7 @@
 package model
 
 import (
-	"diary_api/back-end-learner-tryout-api/database"
+	"back-end-learner-tryout-api/database"
 	"html"
 	"strings"
 
@@ -11,7 +11,7 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"size:255;not null;unique" json:"username"`
+	Email    string `gorm:"size:255;not null;unique" json:"email"`
 	Password string `gorm:"size:255;not null;" json:"-"`
 	Entries  []Entry
 }
@@ -31,7 +31,7 @@ func (user *User) BeforeSave(*gorm.DB) error {
 		return err
 	}
 	user.Password = string(passwordHash)
-	user.Username = html.EscapeString(strings.TrimSpace(user.Username))
+	user.Email = html.EscapeString(strings.TrimSpace(user.Email))
 	return nil
 }
 
@@ -47,10 +47,18 @@ func FindUserByUsername(username string) (User, error) {
 	}
 	return user, nil
 }
+func FindUserByEmail(email string) (User, error) {
+	var user User
+	err := database.Database.Where("email=?", email).Find(&user).Error
+	if err != nil {
+		return User{}, err
+	}
+	return user, nil
+}
 
 func FindUserById(id uint) (User, error) {
 	var user User
-	err := database.Database.Preload("Entries").Where("ID=?", id).Find(&user).Error
+	err := database.Database.Preload("Entries").Where("id=?", id).Find(&user).Error
 	if err != nil {
 		return User{}, err
 	}
