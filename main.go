@@ -7,17 +7,36 @@ import (
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/welcome", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"error":   false,
-			"message": "Yayyyy I'am Gin Gonic",
-		})
-	})
-
-	public := r.Group("/api")
-
-	public.POST("/auth/register", controllers.Register)
-
-	r.Run()
+	loadEnv()
+	loadDatabase()
+	serveApplication()
+	func loadEnv() {
+		err := godotenv.Load(".env.local")
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
+	}
+	
+	func loadDatabase() {
+		database.Connect()
+		//database.Database.AutoMigrate(&model.User{})
+		//database.Database.AutoMigrate(&model.Entry{})
+	}
+	
+	func serveApplication() {
+		router := gin.Default()
+	
+		publicRoutes := router.Group("/auth")
+		publicRoutes.POST("/auth/register", controller.Register)
+		publicRoutes.POST("/auth/login", controller.Login)
+	
+		protectedRoutes := router.Group("/api")
+		protectedRoutes.Use(middleware.JWTAuthMiddleware())
+		protectedRoutes.POST("/entry", controller.AddEntry)
+		protectedRoutes.GET("/entry", controller.GetAllEntries)
+	
+		router.Run(":8000")
+		fmt.Println("Server running on port 8000")
+	}
+	
 }
