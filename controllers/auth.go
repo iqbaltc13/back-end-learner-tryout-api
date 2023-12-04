@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/iqbaltc13/back-end-learner-tryout-api/model"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 
@@ -11,7 +11,7 @@ import (
 )
 
 func Register(context *gin.Context) {
-	var input model.AuthenticationInput
+	var input models.AuthenticationInput
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 
@@ -19,7 +19,7 @@ func Register(context *gin.Context) {
 		return
 	}
 
-	user := model.User{
+	user := models.User{
 		Email:    input.Email,
 		Password: input.Password,
 	}
@@ -35,7 +35,7 @@ func Register(context *gin.Context) {
 }
 
 func Login(context *gin.Context) {
-	var input model.AuthenticationInput
+	var input models.AuthenticationInput
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 
@@ -44,7 +44,7 @@ func Login(context *gin.Context) {
 	}
 
 	//user, err := model.FindUserByUsername(input.Username)
-	user, err := model.FindUserByEmail(input.Email)
+	user, err := models.FindUserByEmail(input.Email)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

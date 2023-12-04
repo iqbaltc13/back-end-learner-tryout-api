@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/iqbaltc13/back-end-learner-tryout-api/model"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 
@@ -11,7 +11,7 @@ import (
 )
 
 func AddEntry(context *gin.Context) {
-	var input model.Entry
+	var input models.Entry
 	if err := context.ShouldBindJSON(&input); err != nil {
 
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
