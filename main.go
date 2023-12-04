@@ -18,7 +18,7 @@ func main() {
 
 }
 func loadEnv() {
-	err := godotenv.Load(".env.local")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -32,12 +32,11 @@ func loadDatabase() {
 
 func serveApplication() {
 	router := gin.Default()
-
-	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/auth/register", controllers.Register)
-	publicRoutes.POST("/auth/login", controllers.Login)
-
 	protectedRoutes := router.Group("/api")
+	publicRoutes := router.Group("/auth")
+	publicRoutes.POST("register", controllers.Register)
+	publicRoutes.POST("login", controllers.Login)
+
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
 	protectedRoutes.POST("/entry", controllers.AddEntry)
 	protectedRoutes.GET("/entry", controllers.GetAllEntries)
