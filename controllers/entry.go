@@ -25,7 +25,7 @@ func AddEntry(context *gin.Context) {
 		return
 	}
 
-	input.UserID = user.Email
+	input.UserID = user.ID.(string)
 
 	savedEntry, err := input.Save()
 
