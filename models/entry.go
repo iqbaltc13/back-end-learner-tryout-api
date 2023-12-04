@@ -1,7 +1,7 @@
 package models
 
 import (
-	"diary_api/database"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
 
 	"gorm.io/gorm"
 )

@@ -1,9 +1,10 @@
 package model
 
 import (
-	"back-end-learner-tryout-api/database"
 	"html"
 	"strings"
+
+	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"

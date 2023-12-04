@@ -1,9 +1,11 @@
 package controllers
 
 import (
-	"back-end-learner-tryout-api/helper"
-	"back-end-learner-tryout-api/model"
 	"net/http"
+
+	"github.com/iqbaltc13/back-end-learner-tryout-api/model"
+
+	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 
 	"github.com/gin-gonic/gin"
 )
