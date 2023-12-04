@@ -10,11 +10,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
 )
 
 var privateKey = []byte(os.Getenv("JWT_PRIVATE_KEY"))
 
-func GenerateJWT(user model.User) (string, error) {
+func GenerateJWT(user models.User) (string, error) {
 	tokenTTL, _ := strconv.Atoi(os.Getenv("TOKEN_TTL"))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":  user.ID,
@@ -40,19 +41,19 @@ func ValidateJWT(context *gin.Context) error {
 	return errors.New("invalid token provided")
 }
 
-func CurrentUser(context *gin.Context) (model.User, error) {
+func CurrentUser(context *gin.Context) (models.User, error) {
 	err := ValidateJWT(context)
 	if err != nil {
-		return model.User{}, err
+		return models.User{}, err
 	}
 
 	token, _ := getToken(context)
 	claims, _ := token.Claims.(jwt.MapClaims)
 	userId := uint(claims["id"].(float64))
 
-	user, err := model.FindUserById(userId)
+	user, err := models.FindUserById(userId)
 	if err != nil {
-		return model.User{}, err
+		return models.User{}, err
 	}
 	return user, nil
 }
