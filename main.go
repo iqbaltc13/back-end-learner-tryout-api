@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/controllers"
 	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
 	"github.com/iqbaltc13/back-end-learner-tryout-api/middleware"
 	"github.com/joho/godotenv"
@@ -33,13 +34,13 @@ func serveApplication() {
 	router := gin.Default()
 
 	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/auth/register", controller.Register)
-	publicRoutes.POST("/auth/login", controller.Login)
+	publicRoutes.POST("/auth/register", controllers.Register)
+	publicRoutes.POST("/auth/login", controllers.Login)
 
 	protectedRoutes := router.Group("/api")
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
-	protectedRoutes.POST("/entry", controller.AddEntry)
-	protectedRoutes.GET("/entry", controller.GetAllEntries)
+	protectedRoutes.POST("/entry", controllers.AddEntry)
+	protectedRoutes.GET("/entry", controllers.GetAllEntries)
 
 	router.Run(":8000")
 	fmt.Println("Server running on port 8000")
