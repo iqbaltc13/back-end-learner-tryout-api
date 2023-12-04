@@ -1,7 +1,7 @@
 package main
 
 import (
-	"back-end-learner-tryout-api/controllers"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/controllers"
 
 	"github.com/gin-gonic/gin"
 )
