@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/iqbaltc13/back-end-learner-tryout-api/controllers"
 	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
@@ -40,7 +42,7 @@ func serveApplication() {
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
 	protectedRoutes.POST("/entry", controllers.AddEntry)
 	protectedRoutes.GET("/entry", controllers.GetAllEntries)
-
-	router.Run(":8000")
-	fmt.Println("Server running on port 8000")
+	port := ":" + os.Getenv("PORT")
+	router.Run(port)
+	fmt.Println("Server running on port " + port)
 }
