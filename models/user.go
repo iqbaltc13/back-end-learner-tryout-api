@@ -59,6 +59,15 @@ func FindUserByUsername(username string) (User, error) {
 	}
 	return user, nil
 }
+
+func isEmailTaken(email string) (error, User) {
+	var user User
+	err := database.Database.Where("email=?", email).Find(&user).Error
+	if err != nil {
+		return err, User{}
+	}
+	return nil, user
+}
 func FindUserByEmail(email string) (User, error) {
 	var user User
 	err := database.Database.Where("email=?", email).Find(&user).Error

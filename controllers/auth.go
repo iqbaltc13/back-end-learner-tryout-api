@@ -11,11 +11,38 @@ import (
 )
 
 func Register(context *gin.Context) {
-	var input models.AuthenticationInput
+	var input models.RegistrationInput
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
+		return
+	}
+	if input.Password != input.ConfirmPassword {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         "Password and confirm password do not match",
+		})
+		return
+	}
+
+	err, userEmailExist := models.isEmailTaken(input.Email)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
+		return
+	}
+
+	if userEmailExist == nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         "Email is already taken",
+		})
 		return
 	}
 
@@ -27,11 +54,17 @@ func Register(context *gin.Context) {
 	savedUser, err := user.Save()
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
 		return
 	}
 
-	context.JSON(http.StatusCreated, gin.H{"user": savedUser})
+	context.JSON(http.StatusCreated, gin.H{
+		"response_code": 200,
+		"data":          savedUser,
+	})
 }
 
 func Login(context *gin.Context) {
@@ -39,27 +72,39 @@ func Login(context *gin.Context) {
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
 		return
 	}
 
 	//user, err := model.FindUserByUsername(input.Username)
 	user, err := models.FindUserByEmail(input.Email)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
 		return
 	}
 
 	err = user.ValidatePassword(input.Password)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
 		return
 	}
 
 	jwt, err := helper.GenerateJWT(user)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
 		return
 	}
 
