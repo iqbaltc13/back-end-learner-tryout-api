@@ -12,7 +12,7 @@ import (
 
 type User struct {
 	gorm.Model
-	ID                    string `gorm:"size:1000;not null;column:id" json:"id"`
+	Id                    string `gorm:"size:1000;not null;column:id" json:"id"`
 	Name                  string `gorm:"size:1000;not null;column:name" json:"name"`
 	Username              string `gorm:"size:1000;not null;unique;column:username" json:"username"`
 	Email                 string `gorm:"size:1000;not null;unique;column:email" json:"email"`
