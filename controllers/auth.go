@@ -97,7 +97,7 @@ func Login(context *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(user)
+	fmt.Println(user.Id)
 
 	err = user.ValidatePassword(input.Password)
 
