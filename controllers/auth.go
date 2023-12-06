@@ -7,7 +7,6 @@ import (
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 
-	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -97,7 +96,7 @@ func Login(context *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(user.Id)
+	//fmt.Println(user.Id)
 
 	err = user.ValidatePassword(input.Password)
 
