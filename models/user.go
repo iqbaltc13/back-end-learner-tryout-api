@@ -12,19 +12,20 @@ import (
 
 type User struct {
 	gorm.Model
-	ID                    string `gorm:"size:1000;not null;" json:"id"`
-	Name                  string `gorm:"size:1000;not null;" json:"name"`
-	Username              string `gorm:"size:1000;not null;unique" json:"username"`
-	Email                 string `gorm:"size:1000;not null;unique" json:"email"`
-	Password              string `gorm:"size:1000;not null;" json:"password"`
-	Phone                 string `gorm:"size:1000;not null;" json:"phone"`
-	TokenLoginMobile      string `gorm:"size:1000;not null;" json:"token_login_mobile"`
-	CurrentApkVersionName string `gorm:"size:1000;not null;" json:"current_apk_version_name"`
-	CurrentApkVersionCode string `gorm:"size:1000;not null;" json:"current_apk_version_code"`
-	VerifiedAt            string `gorm:"size:1000;not null;" json:"email_verified_at"`
-	DeviceInfo            string `gorm:"size:1000;not null;" json:"email_device_info"`
-	DeletedAt             string `gorm:"size:1000;not null;" json:"deleted_at"`
-	CreatedAt             string `gorm:"size:1000;not null;" json:"created_at"`
+	ID                    string `gorm:"size:1000;not null;column:id" json:"id"`
+	Name                  string `gorm:"size:1000;not null;column:name" json:"name"`
+	Username              string `gorm:"size:1000;not null;unique;column:username" json:"username"`
+	Email                 string `gorm:"size:1000;not null;unique;column:email" json:"email"`
+	Password              string `gorm:"size:1000;not null;column:password" json:"password"`
+	Phone                 string `gorm:"size:1000;not null;column:phone" json:"phone"`
+	TokenLoginMobile      string `gorm:"size:1000;not null;column:token_login_mobile" json:"token_login_mobile"`
+	CurrentApkVersionName string `gorm:"size:1000;not null;column:current_apk_version_name" json:"current_apk_version_name"`
+	CurrentApkVersionCode string `gorm:"size:1000;not null;column:current_apk_version_code" json:"current_apk_version_code"`
+	VerifiedAt            string `gorm:"size:1000;not null;column:email_verified_at" json:"email_verified_at"`
+	DeviceInfo            string `gorm:"size:1000;not null;column:email_device_info" json:"email_device_info"`
+	DeletedAt             string `gorm:"size:1000;not null;column:deleted_at" json:"deleted_at"`
+	CreatedAt             string `gorm:"size:1000;not null;column:created_at" json:"created_at"`
+	UpdatedAt             string `gorm:"size:1000;not null;column:updated_at" json:"updated_at"`
 
 	Entries []Entry
 }

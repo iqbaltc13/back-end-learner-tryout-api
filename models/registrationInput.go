@@ -12,5 +12,7 @@ type RegistrationInput struct {
 	CurrentApkVersionCode string `gorm:"size:1000;not null;" json:"current_apk_version_code"`
 	EmailVerifiedAt       string `gorm:"size:1000;not null;" json:"email_verified_at"`
 	CreatedAt             string `gorm:"size:1000;not null;" json:"created_at"`
+	UpdatedAt             string `gorm:"size:1000;not null;" json:"updated_at"`
+	DeletedAt             string `gorm:"size:1000;not null;" json:"deleted_at"`
 	DeviceInfo            string `gorm:"size:1000;not null;" json:"device_info"`
 }
