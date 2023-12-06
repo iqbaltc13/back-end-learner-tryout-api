@@ -32,7 +32,7 @@ func Register(context *gin.Context) {
 		return
 	}
 
-	err, userEmailExist := models.isEmailTaken(input.Email)
+	userEmailExist, err := models.FindUserByEmail(input.Email)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"response_code": 500,
@@ -41,7 +41,7 @@ func Register(context *gin.Context) {
 		return
 	}
 
-	if userEmailExist == nil {
+	if userEmailExist.Email == input.Email {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"response_code": 500,
 			"error":         "Email is already taken",
