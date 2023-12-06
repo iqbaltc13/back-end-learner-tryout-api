@@ -21,9 +21,10 @@ type User struct {
 	TokenLoginMobile      string `gorm:"size:1000;not null;" json:"token_login_mobile"`
 	CurrentApkVersionName string `gorm:"size:1000;not null;" json:"current_apk_version_name"`
 	CurrentApkVersionCode string `gorm:"size:1000;not null;" json:"current_apk_version_code"`
-	EmailVerifiedAt       string `gorm:"size:1000;not null;" json:"email_verified_at"`
-	EmailDeviceInfo       string `gorm:"size:1000;not null;" json:"email_device_info"`
-	EmailDeletedAt        string `gorm:"size:1000;not null;" json:"email_deleted_at"`
+	VerifiedAt            string `gorm:"size:1000;not null;" json:"email_verified_at"`
+	DeviceInfo            string `gorm:"size:1000;not null;" json:"email_device_info"`
+	DeletedAt             string `gorm:"size:1000;not null;" json:"deleted_at"`
+	CreatedAt             string `gorm:"size:1000;not null;" json:"created_at"`
 
 	Entries []Entry
 }
@@ -60,14 +61,6 @@ func FindUserByUsername(username string) (User, error) {
 	return user, nil
 }
 
-func isEmailTaken(email string) (error, User) {
-	var user User
-	err := database.Database.Where("email=?", email).Find(&user).Error
-	if err != nil {
-		return err, User{}
-	}
-	return nil, user
-}
 func FindUserByEmail(email string) (User, error) {
 	var user User
 	err := database.Database.Where("email=?", email).Find(&user).Error

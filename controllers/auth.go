@@ -7,11 +7,14 @@ import (
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 
+	"time"
+
 	"github.com/gin-gonic/gin"
 )
 
 func Register(context *gin.Context) {
 	var input models.RegistrationInput
+	currentTime := time.Now()
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 
@@ -47,8 +50,13 @@ func Register(context *gin.Context) {
 	}
 
 	user := models.User{
-		Email:    input.Email,
-		Password: input.Password,
+		Email:                 input.Email,
+		Password:              input.Password,
+		Phone:                 input.Phone,
+		CurrentApkVersionName: input.CurrentApkVersionName,
+		CurrentApkVersionCode: input.CurrentApkVersionCode,
+		DeviceInfo:            input.DeviceInfo,
+		CreatedAt:             currentTime.Format("2006-01-02 15:04:05"),
 	}
 
 	savedUser, err := user.Save()
