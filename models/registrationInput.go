@@ -1,7 +1,5 @@
 package models
 
-import "github.com/iqbaltc13/back-end-learner-tryout-api/database"
-
 type RegistrationInput struct {
 	Name                  string `gorm:"size:1000;not null;" json:"name"`
 	Username              string `gorm:"size:1000;not null;unique" json:"username"`
@@ -15,13 +13,4 @@ type RegistrationInput struct {
 	EmailVerifiedAt       string `gorm:"size:1000;not null;" json:"email_verified_at"`
 	CreatedAt             string `gorm:"size:1000;not null;" json:"created_at"`
 	DeviceInfo            string `gorm:"size:1000;not null;" json:"device_info"`
-}
-
-func isEmailTaken(email string) (error, User) {
-	var user User
-	err := database.Database.Where("email=?", email).Find(&user).Error
-	if err != nil {
-		return err, User{}
-	}
-	return nil, user
 }
