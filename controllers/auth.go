@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
@@ -10,11 +11,19 @@ import (
 	"fmt"
 	"time"
 
+	"os/exec"
+
 	"github.com/gin-gonic/gin"
 )
 
 func Register(context *gin.Context) {
 	var input models.RegistrationInput
+	newUUID, err := exec.Command("uuidgen").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Generated UUID:")
+	fmt.Printf("%s", newUUID)
 	currentTime := time.Now()
 
 	if err := context.ShouldBindJSON(&input); err != nil {
@@ -25,8 +34,7 @@ func Register(context *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(input.Password)
-	fmt.Println(input.ConfirmPassword)
+
 	if input.Password != input.ConfirmPassword {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"response_code": 500,
