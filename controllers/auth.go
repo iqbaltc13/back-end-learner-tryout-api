@@ -23,7 +23,7 @@ func Register(context *gin.Context) {
 		log.Fatal(err)
 	}
 	fmt.Println("Generated UUID:")
-	fmt.Printf("%s", newUUID)
+	//fmt.Printf("%s", newUUID)
 	currentTime := time.Now()
 
 	if err := context.ShouldBindJSON(&input); err != nil {
@@ -61,6 +61,7 @@ func Register(context *gin.Context) {
 	}
 
 	user := models.User{
+		Id:                    string(newUUID),
 		Name:                  input.Name,
 		Username:              input.Username,
 		Email:                 input.Email,
