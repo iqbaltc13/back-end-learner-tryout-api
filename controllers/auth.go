@@ -13,6 +13,8 @@ import (
 
 	"os/exec"
 
+	"strings"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -61,7 +63,7 @@ func Register(context *gin.Context) {
 	}
 
 	user := models.User{
-		Id:                    string(newUUID),
+		Id:                    strings.ToLower(string(newUUID)),
 		Name:                  input.Name,
 		Username:              input.Username,
 		Email:                 input.Email,
