@@ -7,6 +7,7 @@ import (
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,8 @@ func Register(context *gin.Context) {
 		})
 		return
 	}
+	fmt.Println(input.Password)
+	fmt.Println(input.ConfirmPassword)
 	if input.Password != input.ConfirmPassword {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"response_code": 500,
