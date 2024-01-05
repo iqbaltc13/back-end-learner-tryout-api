@@ -15,6 +15,8 @@ import (
 
 	"strings"
 
+	"os"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -76,6 +78,27 @@ func Register(context *gin.Context) {
 	}
 
 	savedUser, err := user.Save()
+
+	var client = &http.Client{}
+
+	request, err := http.NewRequest("GET", os.Getenv("BASE_URL_ADMIN_APP")+"/batch-send-verification-email", nil)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
+		return
+	}
+
+	response, err := client.Do(request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"response_code": 500,
+			"error":         err.Error(),
+		})
+		return
+	}
+	defer response.Body.Close()
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
