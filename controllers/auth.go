@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
 
@@ -14,8 +15,6 @@ import (
 	"os/exec"
 
 	"strings"
-
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -79,6 +78,20 @@ func Register(context *gin.Context) {
 
 	savedUser, err := user.Save()
 
+	notifikasi := models.Notifikasi{
+		Id:       strings.ToLower(string(newUUID)),
+		Title:    "email_notification",
+		Subtitle: "email_verification_after_regis",
+		Action:   "redirect web page",
+
+		ReceiverId:  savedUser.Id,
+		CreatedById: "0",
+
+		CreatedAt: currentTime.Format("2006-01-02 15:04:05"),
+	}
+
+	savedNotifikasi, err := notifikasi.Save()
+	_ = savedNotifikasi
 	var client = &http.Client{}
 
 	request, err := http.NewRequest("GET", os.Getenv("BASE_URL_ADMIN_APP")+"/batch-send-verification-email", nil)
