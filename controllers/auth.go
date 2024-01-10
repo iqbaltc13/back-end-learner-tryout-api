@@ -45,7 +45,7 @@ func Register(context *gin.Context) {
 		})
 		return
 	}
-
+	idUser := strings.ToLower(string(newUUID))
 	userEmailExist, err := models.FindUserByEmail(input.Email)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -64,7 +64,7 @@ func Register(context *gin.Context) {
 	}
 
 	user := models.User{
-		Id:                    strings.ToLower(string(newUUID)),
+		Id:                    idUser,
 		Name:                  input.Name,
 		Username:              input.Username,
 		Email:                 input.Email,
@@ -84,7 +84,7 @@ func Register(context *gin.Context) {
 		Subtitle: "email_verification_after_regis",
 		Action:   "redirect web page",
 
-		ReceiverId:  savedUser.Id,
+		ReceiverId:  idUser,
 		CreatedById: "0",
 
 		CreatedAt: currentTime.Format("2006-01-02 15:04:05"),
