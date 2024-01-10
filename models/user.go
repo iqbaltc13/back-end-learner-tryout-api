@@ -21,7 +21,7 @@ type User struct {
 	TokenLoginMobile      string `gorm:"size:1000;not null;column:token_login_mobile" json:"token_login_mobile"`
 	CurrentApkVersionName string `gorm:"size:1000;not null;column:current_apk_version_name" json:"current_apk_version_name"`
 	CurrentApkVersionCode string `gorm:"size:1000;not null;column:current_apk_version_code" json:"current_apk_version_code"`
-	VerifiedAt            string `gorm:"size:1000;null;column:email_verified_at" json:"email_verified_at"`
+	VerifiedAt            string `gorm:"null;column:email_verified_at" json:"email_verified_at"`
 	DeviceInfo            string `gorm:"size:1000;not null;column:device_info" json:"device_info"`
 
 	CreatedAt string `gorm:"size:1000;null;column:created_at" json:"created_at"`
