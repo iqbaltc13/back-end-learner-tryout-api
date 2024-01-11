@@ -25,8 +25,6 @@ type User struct {
 	DeviceInfo string `gorm:"size:1000;not null;column:device_info" json:"device_info"`
 
 	CreatedAt string `gorm:"size:1000;null;column:created_at" json:"created_at"`
-
-	Entries []Entry
 }
 
 type Notifikasi struct {
