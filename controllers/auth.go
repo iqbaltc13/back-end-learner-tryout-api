@@ -64,7 +64,7 @@ func Register(context *gin.Context) {
 	}
 
 	user := models.User{
-		Id:                    idUser,
+		ID:                    idUser,
 		Name:                  input.Name,
 		Username:              input.Username,
 		Email:                 input.Email,
@@ -79,12 +79,12 @@ func Register(context *gin.Context) {
 	savedUser, err := user.Save()
 
 	notifikasi := models.Notifikasi{
-		Id:       strings.ToLower(string(newUUID)),
+		ID:       strings.ToLower(string(newUUID)),
 		Title:    "email_notification",
 		Subtitle: "email_verification_after_regis",
 		Action:   "redirect web page",
 
-		ReceiverId:  idUser,
+		ReceiverID:  idUser,
 		CreatedById: "0",
 
 		CreatedAt: currentTime.Format("2006-01-02 15:04:05"),

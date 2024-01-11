@@ -12,7 +12,7 @@ import (
 
 type User struct {
 	gorm.Model
-	Id                    string `gorm:"size:1000;not null;column:id" json:"id"`
+	ID                    string `gorm:"primaryKey"`
 	Name                  string `gorm:"size:1000;not null;column:name" json:"name"`
 	Username              string `gorm:"size:1000;not null;unique;column:username" json:"username"`
 	Email                 string `gorm:"size:1000;not null;unique;column:email" json:"email"`
@@ -27,6 +27,43 @@ type User struct {
 	CreatedAt string `gorm:"size:1000;null;column:created_at" json:"created_at"`
 
 	Entries []Entry
+}
+
+type Notifikasi struct {
+	gorm.Model
+	ID          string `gorm:"primaryKey"`
+	Title       string `gorm:"size:1000;not null;column:title" json:"title"`
+	Subtitle    string `gorm:"size:1000;not null;column:subtitle" json:"subtitle"`
+	Action      string `gorm:"size:1000;not null;column:action" json:"action"`
+	Value       string `gorm:"size:1000;not null;column:value" json:"value"`
+	SenderId    string `gorm:"size:1000;not null;column:sender_id" json:"sender_id"`
+	ReceiverID  string `gorm:"size:1000;not null;column:receiver_id" json:"receiver_id"`
+	CreatedById string `gorm:"size:1000;not null;column:created_at_by_id" json:"current_apk_version_name"`
+
+	ReadAt    string `gorm:"size:1000;not null;column:read_at" json:"read_at"`
+	DeletedAt string `gorm:"size:1000;not null;column:deleted_at" json:"deleted_at"`
+	CreatedAt string `gorm:"size:1000;not null;column:created_at" json:"created_at"`
+	UpdatedAt string `gorm:"size:1000;not null;column:updated_at" json:"updated_at"`
+	Receiver  User   `gorm:"foreignKey:ID;references:ReceiverID"`
+
+	Entries []Entry
+}
+
+func (notifikasi *Notifikasi) Save() (*Notifikasi, error) {
+	err := database.Database.Create(&notifikasi).Error
+	if err != nil {
+		return &Notifikasi{}, err
+	}
+	return notifikasi, nil
+}
+
+func FindNotifikasiById(id string) (Notifikasi, error) {
+	var notifikasi Notifikasi
+	err := database.Database.Preload("Entries").Where("id=?", id).Find(&notifikasi).Error
+	if err != nil {
+		return Notifikasi{}, err
+	}
+	return notifikasi, nil
 }
 
 func (user *User) Save() (*User, error) {
