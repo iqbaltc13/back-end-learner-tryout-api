@@ -29,20 +29,17 @@ type User struct {
 
 type Notifikasi struct {
 	gorm.Model
-	ID          string `gorm:"primaryKey"`
-	Title       string `gorm:"size:1000;not null;column:title" json:"title"`
-	Subtitle    string `gorm:"size:1000;not null;column:subtitle" json:"subtitle"`
-	Action      string `gorm:"size:1000;not null;column:action" json:"action"`
-	Value       string `gorm:"size:1000;not null;column:value" json:"value"`
-	SenderId    string `gorm:"size:1000;not null;column:sender_id" json:"sender_id"`
-	ReceiverID  string `gorm:"size:1000;not null;column:receiver_id" json:"receiver_id"`
-	CreatedById string `gorm:"size:1000;not null;column:created_at_by_id" json:"current_apk_version_name"`
+	ID         string `gorm:"primaryKey"`
+	Title      string `gorm:"size:1000;not null;column:title" json:"title"`
+	Subtitle   string `gorm:"size:1000;not null;column:subtitle" json:"subtitle"`
+	Action     string `gorm:"size:1000;not null;column:action" json:"action"`
+	Value      string `gorm:"size:1000;not null;column:value" json:"value"`
+	SenderId   string `gorm:"size:1000;not null;column:sender_id" json:"sender_id"`
+	ReceiverID string `gorm:"size:1000;not null;column:receiver_id" json:"receiver_id"`
 
-	ReadAt    string `gorm:"size:1000;not null;column:read_at" json:"read_at"`
-	DeletedAt string `gorm:"size:1000;not null;column:deleted_at" json:"deleted_at"`
 	CreatedAt string `gorm:"size:1000;not null;column:created_at" json:"created_at"`
-	UpdatedAt string `gorm:"size:1000;not null;column:updated_at" json:"updated_at"`
-	Receiver  User   `gorm:"foreignKey:ReceiverID;references:"ID`
+
+	Receiver User `gorm:"foreignKey:ReceiverID;references:"ID`
 }
 
 func (notifikasi *Notifikasi) Save() (*Notifikasi, error) {
