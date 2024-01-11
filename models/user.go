@@ -42,9 +42,7 @@ type Notifikasi struct {
 	DeletedAt string `gorm:"size:1000;not null;column:deleted_at" json:"deleted_at"`
 	CreatedAt string `gorm:"size:1000;not null;column:created_at" json:"created_at"`
 	UpdatedAt string `gorm:"size:1000;not null;column:updated_at" json:"updated_at"`
-	Receiver  User   `gorm:"foreignKey:ID;references:ReceiverID"`
-
-	Entries []Entry
+	Receiver  User   `gorm:"foreignKey:ReceiverID;references:"ID`
 }
 
 func (notifikasi *Notifikasi) Save() (*Notifikasi, error) {
