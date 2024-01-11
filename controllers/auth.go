@@ -84,8 +84,7 @@ func Register(context *gin.Context) {
 		Subtitle: "email_verification_after_regis",
 		Action:   "redirect web page",
 
-		ReceiverID:  idUser,
-		CreatedById: "0",
+		ReceiverID: idUser,
 
 		CreatedAt: currentTime.Format("2006-01-02 15:04:05"),
 	}
