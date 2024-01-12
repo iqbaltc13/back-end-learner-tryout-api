@@ -77,9 +77,9 @@ func Register(context *gin.Context) {
 	}
 
 	savedUser, err := user.Save()
-
+	idNotif := strings.TrimSuffix(strings.ToLower(string(newUUID)), "\n")
 	notifikasi := models.Notifikasi{
-		ID:       strings.TrimSuffix(strings.ToLower(string(newUUID)), "\n"),
+		ID:       idNotif,
 		Title:    "email_notification",
 		Subtitle: "email_verification_after_regis",
 		Action:   "redirect web page",
@@ -93,7 +93,7 @@ func Register(context *gin.Context) {
 	_ = savedNotifikasi
 	var client = &http.Client{}
 
-	request, err := http.NewRequest("GET", os.Getenv("BASE_URL_ADMIN_APP")+"/batch-send-verification-email", nil)
+	request, err := http.NewRequest("GET", os.Getenv("BASE_URL_ADMIN_APP")+"/send-verification-email"+"?id="+idNotif, nil)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"response_code": 500,
