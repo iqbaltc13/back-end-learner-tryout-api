@@ -45,7 +45,7 @@ func Register(context *gin.Context) {
 		})
 		return
 	}
-	idUser := strings.TrimSuffix(strings.ToLower(string(newUUID)), "\n"),
+	idUser := strings.TrimSuffix(strings.ToLower(string(newUUID)), "\n")
 	userEmailExist, err := models.FindUserByEmail(input.Email)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
