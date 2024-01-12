@@ -45,7 +45,7 @@ func Register(context *gin.Context) {
 		})
 		return
 	}
-	idUser := strings.ToLower(string(newUUID))
+	idUser := strings.TrimSuffix(strings.ToLower(string(newUUID)), "\n"),
 	userEmailExist, err := models.FindUserByEmail(input.Email)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -79,7 +79,7 @@ func Register(context *gin.Context) {
 	savedUser, err := user.Save()
 
 	notifikasi := models.Notifikasi{
-		ID:       strings.ToLower(string(newUUID)),
+		ID:       strings.TrimSuffix(strings.ToLower(string(newUUID)), "\n"),
 		Title:    "email_notification",
 		Subtitle: "email_verification_after_regis",
 		Action:   "redirect web page",
