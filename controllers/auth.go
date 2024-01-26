@@ -5,7 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/golang-jwt/jwt"
+	"https://github.com/golang-jwt/jwt/v4"
+
 	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
