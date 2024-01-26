@@ -40,7 +40,7 @@ func serveApplication() {
 	publicRoutes.POST("login", controllers.Login)
 
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
-	protectedRoutes.POST("home", controllers.Home(context*gin.Context))
+	protectedRoutes.POST("home", controllers.Home)
 
 	port := ":" + os.Getenv("PORT")
 	router.Run(port)
