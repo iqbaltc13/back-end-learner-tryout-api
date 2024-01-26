@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/iqbaltc13/back-end-learner-tryout-api/models"
 
 	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
@@ -174,4 +175,20 @@ func Login(context *gin.Context) {
 		"token_jwt":     jwt,
 		"data":          user,
 	})
+}
+
+func verifyToken(tokenString string) error {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return os.Getenv("APP_KEY"), nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	if !token.Valid {
+		return fmt.Errorf("invalid token")
+	}
+
+	return nil
 }
