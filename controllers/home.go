@@ -9,7 +9,7 @@ import (
 )
 
 func Home(context *gin.Context) {
-	token, err := helper.CurrentUser(context)
+	user, err := helper.CurrentUser(context)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"response_code": 500,
@@ -18,5 +18,5 @@ func Home(context *gin.Context) {
 		return
 	}
 
-	fmt.Println(token)
+	fmt.Println(user)
 }
