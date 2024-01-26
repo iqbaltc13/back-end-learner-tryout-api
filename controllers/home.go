@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,5 +17,10 @@ func Home(context *gin.Context) {
 		return
 	}
 
-	fmt.Println(user)
+	context.JSON(http.StatusOK, gin.H{
+		"response_code": 200,
+		"messages":      "Login Success",
+
+		"data": user,
+	})
 }
