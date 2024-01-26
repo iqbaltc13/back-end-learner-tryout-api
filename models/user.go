@@ -52,7 +52,7 @@ func (notifikasi *Notifikasi) Save() (*Notifikasi, error) {
 
 func FindNotifikasiById(id string) (Notifikasi, error) {
 	var notifikasi Notifikasi
-	err := database.Database.Preload("Entries").Where("id=?", id).Find(&notifikasi).Error
+	err := database.Database.Where("id=?", id).Find(&notifikasi).Error
 	if err != nil {
 		return Notifikasi{}, err
 	}
@@ -110,7 +110,7 @@ func FindUserByEmail(email string) (User, error) {
 
 func FindUserById(id string) (User, error) {
 	var user User
-	err := database.Database.Preload("Entries").Where("id=?", id).Find(&user).Error
+	err := database.Database.Where("id=?", id).Find(&user).Error
 	if err != nil {
 		return User{}, err
 	}
