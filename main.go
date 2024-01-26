@@ -28,8 +28,7 @@ func loadEnv() {
 
 func loadDatabase() {
 	database.Connect()
-	//database.Database.AutoMigrate(&model.User{})
-	//database.Database.AutoMigrate(&model.Entry{})
+
 }
 
 func serveApplication() {
@@ -40,7 +39,7 @@ func serveApplication() {
 	publicRoutes.POST("login", controllers.Login)
 
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
-	protectedRoutes.POST("home", controllers.Home)
+	protectedRoutes.GET("home", controllers.Home)
 
 	port := ":" + os.Getenv("PORT")
 	router.Run(port)

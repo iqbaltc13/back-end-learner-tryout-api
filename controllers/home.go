@@ -2,26 +2,13 @@ package controllers
 
 import (
 	"fmt"
-	"net/http"
-	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/iqbaltc13/back-end-learner-tryout-api/helper"
 )
 
-func extractTokenFromHeader(header string) (string, error) {
-	parts := strings.Split(header, " ")
-	if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
-		return "", fmt.Errorf("invalid or missing bearer token")
-	}
-	return parts[1], nil
-}
+func Home(context *gin.Context) {
+	token := helper.ValidateJWT(context)
 
-func Home(w http.ResponseWriter, r *http.Request) {
-
-	tokenString, err := extractTokenFromHeader(r.Header.Get("Authorization"))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
-
-	fmt.Println(tokenString)
-
+	fmt.Println(token)
 }
