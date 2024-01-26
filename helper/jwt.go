@@ -78,3 +78,11 @@ func getTokenFromRequest(context *gin.Context) string {
 	}
 	return ""
 }
+
+func extractTokenFromHeader(header string) (string, error) {
+	parts := strings.Split(header, " ")
+	if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
+		return "", fmt.Errorf("invalid or missing bearer token")
+	}
+	return parts[1], nil
+}

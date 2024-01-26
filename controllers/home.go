@@ -1,18 +1,18 @@
 package controllers
 
 import (
-	"strings"
-
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"net/http"
 )
 
-func Home(context *gin.Context) string {
+func Home(w http.ResponseWriter, r *http.Request) {
 
-	bearerToken := context.Request.Header.Get("Authorization")
-	splitToken := strings.Split(bearerToken, " ")
-	if len(splitToken) == 2 {
-		return splitToken[1]
+	tokenString, err := helper.extractTokenFromHeader(r.Header.Get("Authorization"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
 	}
-	return ""
+
+	fmt.Fprintf(tokenString)
 
 }
