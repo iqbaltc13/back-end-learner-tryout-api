@@ -40,6 +40,7 @@ func serveApplication() {
 
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
 	protectedRoutes.GET("home", controllers.Home)
+	protectedRoutes.GET("list-kelas", controllers.ListKelas)
 
 	port := ":" + os.Getenv("PORT")
 	router.Run(port)

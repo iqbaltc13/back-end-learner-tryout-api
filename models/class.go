@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Kelas struct {
+type Class struct {
 	gorm.Model
 	ID         string `gorm:"primaryKey"`
 	Name       string `gorm:"size:1000;not null;column:name" json:"name"`
@@ -19,33 +19,33 @@ type Kelas struct {
 	DeletedAt  string `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
 }
 
-func (kelas *Kelas) Save() (*Kelas, error) {
-	err := database.Database.Create(&kelas).Error
+func (class *Class) Save() (*Class, error) {
+	err := database.Database.Create(&class).Error
 	if err != nil {
-		return &Kelas{}, err
+		return &Class{}, err
 	}
-	return kelas, nil
+	return class, nil
 }
 
-func (kelas *Kelas) BeforeSave(*gorm.DB) error {
+func (class *Class) BeforeSave(*gorm.DB) error {
 	currentTime := time.Now()
-	kelas.CreatedAt = currentTime.Format("2006-01-02 15:04:05")
+	class.CreatedAt = currentTime.Format("2006-01-02 15:04:05")
 	return nil
 }
 
-func FindKelasById(id string) (Kelas, error) {
-	var kelas Kelas
-	err := database.Database.Where("id=?", id).Find(&kelas).Error
+func FindClassById(id string) (Class, error) {
+	var class Class
+	err := database.Database.Where("id=?", id).Find(&class).Error
 	if err != nil {
-		return Kelas{}, err
+		return Class{}, err
 	}
-	return kelas, nil
+	return class, nil
 }
-func FindKelasByIds(ids []string) (Kelas, error) {
-	var kelas Kelas
-	err := database.Database.Where(ids).Find(&kelas).Error
+func FindClassByIds(ids []string) (Class, error) {
+	var class Class
+	err := database.Database.Where(ids).Find(&class).Error
 	if err != nil {
-		return Kelas{}, err
+		return Class{}, err
 	}
-	return kelas, nil
+	return class, nil
 }
