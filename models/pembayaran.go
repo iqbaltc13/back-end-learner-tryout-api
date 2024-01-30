@@ -27,11 +27,11 @@ func (pembayaran *Pembayaran) Save() (*Pembayaran, error) {
 	return pembayaran, nil
 }
 
-func FindPembayaranByUserId(Userid string) (Pembayaran, error) {
-	var pembayaran Pembayaran
-	err := database.Database.Where("user_id = ?", Userid).Find(&pembayaran).Error
+func FindPembayaranByUserId(Userid string) ([]Pembayaran, error) {
+	var pembayarans []Pembayaran
+	err := database.Database.Where("user_id = ?", Userid).Find(&pembayarans).Error
 	if err != nil {
-		return Pembayaran{}, err
+		return pembayarans, err
 	}
-	return pembayaran, nil
+	return pembayarans, nil
 }
