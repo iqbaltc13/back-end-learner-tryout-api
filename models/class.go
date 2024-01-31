@@ -41,11 +41,11 @@ func FindClassById(id string) (Class, error) {
 	}
 	return class, nil
 }
-func FindClassByIds(ids []string) (Class, error) {
-	var class Class
+func FindClassByIds(ids []string) ([]Class, error) {
+	var class []Class
 	err := database.Database.Where(ids).Find(&class).Error
 	if err != nil {
-		return Class{}, err
+		return class, err
 	}
 	return class, nil
 }
