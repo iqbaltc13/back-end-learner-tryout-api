@@ -10,13 +10,29 @@ import (
 
 type Class struct {
 	gorm.Model
-	ID         string `gorm:"primaryKey"`
-	Name       string `gorm:"size:1000;not null;column:name" json:"name"`
-	Keterangan string `gorm:"not null;column:keterangan" json:"keterangan"`
-	Status     string `gorm:"not null;column:status" json:"status"`
-	CreatedAt  string `gorm:"size:1000;null;column:created_at" json:"created_at"`
-	UpdatedAt  string `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
-	DeletedAt  string `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
+	ID           string        `gorm:"primaryKey"`
+	Name         string        `gorm:"size:1000;not null;column:name" json:"name"`
+	Keterangan   string        `gorm:"not null;column:keterangan" json:"keterangan"`
+	Status       string        `gorm:"not null;column:status" json:"status"`
+	CreatedAt    string        `gorm:"size:1000;null;column:created_at" json:"created_at"`
+	UpdatedAt    string        `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
+	DeletedAt    string        `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
+	MasterUjians []MasterUjian `gorm:"foreignKey:ClassID;references:ID"`
+}
+
+type MasterUjian struct {
+	gorm.Model
+	ID                    string `gorm:"primaryKey"`
+	Name                  string `gorm:"size:1000;not null;column:name" json:"name"`
+	Keterangan            string `gorm:"not null;column:keterangan" json:"keterangan"`
+	ClassID               string `gorm:"not null;column:class_id" json:"class_id"`
+	MaxPeserta            string `gorm:"not null;column:max_peserta" json:"max_peserta"`
+	NilaiPerSoal          string `gorm:"not null;column:nilai_per_soal" json:"nilai_per_soal"`
+	IsGroupBySoalCategory string `gorm:"not null;column:is_group_by_soal_category" json:"is_group_by_soal_category"`
+	CreatedAt             string `gorm:"size:1000;null;column:created_at" json:"created_at"`
+	UpdatedAt             string `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
+	DeletedAt             string `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
+	Class                 Class  `gorm:"foreignKey:ClassID;references:"ID`
 }
 
 func (class *Class) Save() (*Class, error) {
