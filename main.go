@@ -41,6 +41,7 @@ func serveApplication() {
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
 	protectedRoutes.GET("home", controllers.Home)
 	protectedRoutes.GET("list-kelas", controllers.ListClass)
+	protectedRoutes.GET("list-enrol", controllers.ListEnrol)
 
 	port := ":" + os.Getenv("PORT")
 	router.Run(port)

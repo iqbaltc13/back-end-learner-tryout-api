@@ -65,3 +65,12 @@ func FindClassByIds(ids []string) ([]Class, error) {
 	}
 	return class, nil
 }
+
+func FindClassAndMasterUjianByIds(ids []string) ([]Class, error) {
+	var class []Class
+	err := database.Database.Preload("MasterUjians").Where(ids).Find(&class).Error
+	if err != nil {
+		return class, err
+	}
+	return class, nil
+}
