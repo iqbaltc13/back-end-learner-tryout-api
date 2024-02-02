@@ -32,7 +32,7 @@ type MasterUjian struct {
 	CreatedAt             string `gorm:"size:1000;null;column:created_at" json:"created_at"`
 	UpdatedAt             string `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
 	DeletedAt             string `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
-	Class                 Class  `gorm:"foreignKey:ClassID;references:"ID`
+	//Class                 Class  `gorm:"foreignKey:ClassID;references:"ID`
 }
 
 func (class *Class) Save() (*Class, error) {

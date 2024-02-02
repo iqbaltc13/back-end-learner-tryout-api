@@ -26,11 +26,17 @@ func ListEnrol(context *gin.Context) {
 
 	}
 	listCLassAndMasterUjian, err := models.FindClassAndMasterUjianByIds(ClassIds)
+	var MasterUjianIds []string
+	for _, element := range listCLassAndMasterUjian {
+		for _, elementChild := range element.MasterUjians {
+			MasterUjianIds = append(MasterUjianIds, elementChild.ID)
+		}
+	}
 
 	context.JSON(http.StatusOK, gin.H{
 		"response_code": 200,
 		"messages":      "Success",
 
-		"data": listCLassAndMasterUjian,
+		"data": MasterUjianIds,
 	})
 }
