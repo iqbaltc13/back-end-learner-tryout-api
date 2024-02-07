@@ -1,0 +1,66 @@
+package models
+
+import (
+	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
+
+	"time"
+
+	"gorm.io/gorm"
+)
+
+type MasterTipeSoalDetail struct {
+	gorm.Model
+	ID               string `gorm:"primaryKey"`
+	Name             string `gorm:"size:1000;not null;column:name" json:"name"`
+	MasterTipeSoalid string `gorm:"null;column:master_tipe_soal_id" json:"master__id"`
+	CreatedAt        string `gorm:"size:1000;null;column:created_at" json:"created_at"`
+	UpdatedAt        string `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
+	DeletedAt        string `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
+}
+
+func (masterTipeSoalDetail *MasterTipeSoalDetail) Save() (*MasterTipeSoalDetail, error) {
+	err := database.Database.Create(&masterTipeSoalDetail).Error
+	if err != nil {
+		return &MasterTipeSoalDetail{}, err
+	}
+	return masterTipeSoalDetail, nil
+}
+
+func (masterTipeSoalDetail *MasterTipeSoalDetail) BeforeSave(*gorm.DB) error {
+	currentTime := time.Now()
+	masterTipeSoalDetail.CreatedAt = currentTime.Format("2006-01-02 15:04:05")
+	return nil
+}
+
+func FindMasterTipeSoalById(id string) (MasterTipeSoalDetail, error) {
+	var masterTipeSoalDetail MasterTipeSoalDetail
+	err := database.Database.Where("id=?", id).Find(&masterTipeSoalDetail).Error
+	if err != nil {
+		return MasterTipeSoalDetail{}, err
+	}
+	return masterTipeSoalDetail, nil
+}
+func FindMasterTipeSoalByIds(ids []string) ([]MasterTipeSoalDetail, error) {
+	var masterTipeSoalDetail []MasterTipeSoalDetail
+	err := database.Database.Where(ids).Find(&masterTipeSoalDetail).Error
+	if err != nil {
+		return masterTipeSoalDetail, err
+	}
+	return masterTipeSoalDetail, nil
+}
+func FindMasterTipeSoalByMasterUjianIds(ids []string) ([]MasterTipeSoalDetail, error) {
+	var masterTipeSoalDetail []MasterTipeSoalDetail
+	err := database.Database.Where("master_ujian_id IN ?", ids).Find(&masterTipeSoalDetail).Error
+	if err != nil {
+		return masterTipeSoalDetail, err
+	}
+	return masterTipeSoalDetail, nil
+}
+func FindMasterTipeSoalByMasterUjianId(id string) (MasterTipeSoalDetail, error) {
+	var masterTipeSoalDetail MasterTipeSoalDetail
+	err := database.Database.Where("master_ujian_id = ?", id).Find(&masterTipeSoalDetail).Error
+	if err != nil {
+		return MasterTipeSoalDetail{}, err
+	}
+	return masterTipeSoalDetail, nil
+}
