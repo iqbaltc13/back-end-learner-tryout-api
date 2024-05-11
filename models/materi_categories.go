@@ -1,8 +1,4 @@
 import (
-	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
-
-	"time"
-
 	"gorm.io/gorm"
 )
 
