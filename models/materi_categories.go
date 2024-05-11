@@ -23,7 +23,7 @@ type MasterMateri struct {
 
 	LinkFile   string     `gorm:"not null;column:link_file" json:"link_file"`
 	Name       string     `gorm:"not null;column:name" json:"name"`
-	Status     integer    `gorm:"not null;column:status" json:"status"`
+	Status     int        `gorm:"not null;column:status" json:"status"`
 	CreatedAt  string     `gorm:"size:1000;null;column:created_at" json:"created_at"`
 	UpdatedAt  string     `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
 	DeletedAt  string     `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
