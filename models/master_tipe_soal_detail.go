@@ -88,33 +88,9 @@ func (masterTipeSoalDetail *MasterTipeSoalDetail) BeforeSave(*gorm.DB) error {
 	return nil
 }
 
-func FindMasterTipeSoalById(id string) (MasterTipeSoalDetail, error) {
+func FindMasterTipeSoalDetailById(id string) (MasterTipeSoalDetail, error) {
 	var masterTipeSoalDetail MasterTipeSoalDetail
 	err := database.Database.Where("id=?", id).Find(&masterTipeSoalDetail).Error
-	if err != nil {
-		return MasterTipeSoalDetail{}, err
-	}
-	return masterTipeSoalDetail, nil
-}
-func FindMasterTipeSoalByIds(ids []string) ([]MasterTipeSoalDetail, error) {
-	var masterTipeSoalDetail []MasterTipeSoalDetail
-	err := database.Database.Where(ids).Find(&masterTipeSoalDetail).Error
-	if err != nil {
-		return masterTipeSoalDetail, err
-	}
-	return masterTipeSoalDetail, nil
-}
-func FindMasterTipeSoalByMasterUjianIds(ids []string) ([]MasterTipeSoalDetail, error) {
-	var masterTipeSoalDetail []MasterTipeSoalDetail
-	err := database.Database.Where("master_ujian_id IN ?", ids).Find(&masterTipeSoalDetail).Error
-	if err != nil {
-		return masterTipeSoalDetail, err
-	}
-	return masterTipeSoalDetail, nil
-}
-func FindMasterTipeSoalByMasterUjianId(id string) (MasterTipeSoalDetail, error) {
-	var masterTipeSoalDetail MasterTipeSoalDetail
-	err := database.Database.Where("master_ujian_id = ?", id).Find(&masterTipeSoalDetail).Error
 	if err != nil {
 		return MasterTipeSoalDetail{}, err
 	}
