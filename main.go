@@ -42,6 +42,7 @@ func serveApplication() {
 	protectedRoutes.GET("home", controllers.Home)
 	protectedRoutes.GET("list-kelas", controllers.ListClass)
 	protectedRoutes.GET("list-enrol", controllers.ListEnrol)
+	protectedRoutes.GET("list-materi", controllers.ListMateri)
 
 	port := ":" + os.Getenv("PORT")
 	router.Run(port)

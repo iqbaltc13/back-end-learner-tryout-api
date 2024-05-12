@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,18 +26,13 @@ func ListMateri(context *gin.Context) {
 		ClassIds = append(ClassIds, element.Classid)
 
 	}
-	listCLassAndMasterUjian, err := models.FindClassAndMasterUjianByIds(ClassIds)
-	var MasterUjianIds []string
-	for _, element := range listCLassAndMasterUjian {
-		for _, elementChild := range element.MasterUjians {
-			MasterUjianIds = append(MasterUjianIds, elementChild.ID)
-		}
-	}
+	fmt.Println(ClassIds)
+	listMateri, err := models.FindMasterMateriesPerCategoriesByClassIds(ClassIds)
 
 	context.JSON(http.StatusOK, gin.H{
 		"response_code": 200,
 		"messages":      "Success",
 
-		"data": MasterUjianIds,
+		"data": listMateri,
 	})
 }
