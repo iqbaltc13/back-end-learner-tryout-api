@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/iqbaltc13/back-end-learner-tryout-api/database"
 	"gorm.io/gorm"
 )
 
@@ -38,4 +39,15 @@ type MateriType struct {
 	CreatedAt string `gorm:"size:1000;null;column:created_at" json:"created_at"`
 	UpdatedAt string `gorm:"size:1000;null;column:updated_at" json:"updated_at"`
 	DeletedAt string `gorm:"size:1000;null;column:deleted_at" json:"deleted_at"`
+}
+
+func FindMasterMateriesPerCategoriesByClassIds(ids []string) ([]MateriCategory, error) {
+	var materiCategories []MateriCategory
+	err := database.Database.Preload("MasterMateri", func(db *gorm.DB) *gorm.DB {
+		return db.Where("class_id IN ?", ids).Preload("MateriType").Order("orders.amount DESC")
+	}).Find(&materiCategories).Error
+	if err != nil {
+		return materiCategories, err
+	}
+	return materiCategories, nil
 }
